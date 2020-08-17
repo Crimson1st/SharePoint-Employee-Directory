@@ -1,0 +1,93 @@
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"> 
+<head>
+<title>People Search Table Item</title>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:TemplateHidden msdt:dt="string">0</mso:TemplateHidden>
+<mso:MasterPageDescription msdt:dt="string">Displays a result tailored for a person.</mso:MasterPageDescription>
+<mso:ContentTypeId msdt:dt="string">0x0101002039C03B61C64EC4A04F5361F385106603</mso:ContentTypeId>
+<mso:TargetControlType msdt:dt="string">;#SearchResults;#</mso:TargetControlType>
+<mso:HtmlDesignAssociated msdt:dt="string">1</mso:HtmlDesignAssociated>
+<mso:CrawlerXSLFile msdt:dt="string"></mso:CrawlerXSLFile>
+<mso:ManagedPropertyMapping msdt:dt="string">&#39;AboutMe&#39;:&#39;AboutMe&#39;,&#39;AccountName&#39;:&#39;AccountName&#39;,&#39;CostCenter&#39;:&#39;CostCenter&#39;,&#39;Office&#39;:&#39;OfficeNumber&#39;,&#39;Department&#39;:&#39;Department&#39;,&#39;HitHighlightedProperties&#39;:&#39;HitHighlightedProperties&#39;,&#39;Interests&#39;:&#39;Interests&#39;,&#39;JobTitle&#39;:&#39;JobTitle&#39;,&#39;LastModifiedTime&#39;:&#39;LastModifiedTime&#39;,&#39;Memberships&#39;:&#39;Memberships&#39;,&#39;PastProjects&#39;:&#39;PastProjects&#39;,&#39;Path&#39;:&#39;Path&#39;,&#39;PictureURL&#39;:&#39;PictureURL&#39;,&#39;PreferredName&#39;:&#39;PreferredName&#39;,&#39;Responsibilities&#39;:&#39;Responsibilities&#39;,&#39;Schools&#39;:&#39;Schools&#39;,&#39;ServiceApplicationID&#39;:&#39;ServiceApplicationID&#39;,&#39;SipAddress&#39;:&#39;SipAddress&#39;,&#39;Skills&#39;:&#39;Skills&#39;,&#39;UserProfile_GUID&#39;:&#39;UserProfile_GUID&#39;,&#39;WorkEmail&#39;:&#39;WorkEmail&#39;,&#39;WorkId&#39;:&#39;WorkId&#39;,&#39;WorkPhone&#39;:&#39;WorkPhone&#39;,&#39;YomiDisplayName&#39;:&#39;YomiDisplayName&#39;,&#39;Manager&#39;:&#39;Manager&#39;,&#39;OrgNames&#39;:&#39;OrgNames&#39;</mso:ManagedPropertyMapping>
+<mso:HtmlDesignPreviewUrl msdt:dt="string"></mso:HtmlDesignPreviewUrl>
+<mso:HtmlDesignConversionSucceeded msdt:dt="string">True</mso:HtmlDesignConversionSucceeded>
+<mso:HtmlDesignStatusAndPreview msdt:dt="string">https://interfacesys.sharepoint.com/search/_catalogs/masterpage/_EmployeeDirectory/Display Templates/Search/Item_Person_Table.html, Conversion successful.</mso:HtmlDesignStatusAndPreview>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+    <div id="Item_Person">
+<!--#_ 
+	function toTitleCase(str) {
+        return str.replace(
+            /\w\S*/g,
+            function(txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            }
+        );
+    }
+		if(!$isNull(ctx.CurrentItem) && !$isNull(ctx.ClientControl)){
+			var encodedPath = $urlHtmlEncode(ctx.CurrentItem.Path);      
+			var accountName = ctx.CurrentItem.AccountName.substr(ctx.CurrentItem.AccountName.lastIndexOf('|') + 1);
+			var managerName = '';
+			if(!$isNull(ctx.CurrentItem.Manager)){
+			var managerEmail = ctx.CurrentItem.Manager.substr(ctx.CurrentItem.Manager.lastIndexOf('|') + 1);
+			managerName	= managerEmail.substr(0,managerEmail.lastIndexOf('@'));
+			managerName = toTitleCase(managerName.replace('.',' '));
+			}
+			// Use size M and 72px for medium instead of small
+			var picUrl2 = 'https://interfacesys.sharepoint.com/_vti_bin/DelveApi.ashx/people/profileimage?size=S&userId=' + accountName;
+			var picUrl = 'https://nam.delve.office.com/mt/v3/people/profileimage?size=L&userId=' + accountName;
+			var css = 'min-width: 48px;min-height: 48px;clip: rect(0px, 48px, 48px, 0px);max-width: 48px;';
+_#-->
+<!--#_
+			// If this is the first item in the results, emit the table header
+			if(ctx.CurrentItemIdx === 0) {
+_#-->
+				<thead>
+					<tr class="ms-viewheadertr ms-vhltr">
+						<td class="ms-vh2">Picture</td>
+						<td class="ms-vh2">Name</td>
+						<td class="ms-vh2">Department</td>
+						<td class="ms-vh2">Job Title</td>
+						<td class="ms-vh2">Work Phone</td>
+						<td class="ms-vh2">Email</td>
+						<td class="ms-vh2">Office</td>
+						<td class="ms-vh2">Manager</td>
+					</tr>
+				</thead>
+<!--#_ 
+			} 
+_#-->
+			<tr>
+				<td class="ms-vb2"><img src="_#= picUrl =#_" onerror="this.src = '_#= picUrl2 =#_';" style="_#= css =#_"></td>
+				<td class="ms-vb2">
+					<a clicktype="Result" id="NameFieldLink" href="_#= encodedPath =#_" title="_#= ctx.CurrentItem.PreferredName =#_">_#= ctx.CurrentItem.PreferredName =#_</a>
+				</td>
+				<td class="ms-vb2">_#= ctx.CurrentItem.Department =#_</td>
+				<td class="ms-vb2">_#= ctx.CurrentItem.JobTitle =#_</td>
+				<td class="ms-vb2">_#=ctx.CurrentItem.WorkPhone=#_</td>
+				<td class="ms-vb2">
+					<a href="mailto:_#=ctx.CurrentItem.WorkEmail=#_">_#=ctx.CurrentItem.WorkEmail=#_</a>
+				</td>
+				<td class="ms-vb2">_#= ctx.CurrentItem.OfficeNumber =#_</td>
+				<td class="ms-vb2">_#= managerName =#_</td>
+			</tr>
+<!--#_ 
+	} 
+_#-->
+    </div>
+</body>
+</html>
+<html><head><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"><meta name="Robots" content="NOINDEX " /></head><body></body>
+                <script type="text/javascript">
+                 var gearPage = document.getElementById('GearPage');
+                 if(null != gearPage)
+                 {
+                     gearPage.parentNode.removeChild(gearPage);
+                     document.title = "Error";
+                 }
+                 </script>
+                 </html>
